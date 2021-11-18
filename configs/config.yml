@@ -1,0 +1,7 @@
+server:
+  port: ":8080"
+
+db:
+  host: "database-2.c7sjcxek3mor.eu-central-1.rds.amazonaws.com"
+  port: "5432"
+  name: "postgres"
