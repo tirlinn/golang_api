@@ -6,19 +6,30 @@ import (
 	"net/http"
 )
 
-func (s *Handler) TestStudent(c echo.Context) error {
+func (h *Handler) TestStudent(c echo.Context) error {
 	return c.String(http.StatusOK, "Test")
 }
 
-func (s *Handler) GetAllStudents(c echo.Context) error {
+func (h *Handler) GetAllStudents(c echo.Context) error {
 	return c.JSON(http.StatusOK, "students")
 }
 
-func (s *Handler) CreateStudent(c echo.Context) error {
-	student := &model.Student{}
-	if err := c.Bind(student); err != nil {
+func (h *Handler) CreateStudent(c echo.Context) error {
+	var student model.Student
+
+	if err := c.Bind(&student); err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusCreated, student)
+	id, err := h.services.CreateStudent(student)
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"error": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"id": id,
+	})
 }

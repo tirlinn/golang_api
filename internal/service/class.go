@@ -16,3 +16,7 @@ func NewClassService(repo repository.Class) *ClassService {
 func (s *ClassService) CreateClass(class model.Class) (int, error) {
 	return s.repo.CreateClass(class)
 }
+
+func (s *ClassService) GetAllClasses() ([]model.Class, error) {
+	return s.repo.GetAllClasses()
+}

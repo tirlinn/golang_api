@@ -7,10 +7,11 @@ import (
 
 type Class interface {
 	CreateClass(class model.Class) (int, error)
+	GetAllClasses() ([]model.Class, error)
 }
 
 type Student interface {
-
+	CreateStudent(student model.Student) (int, error)
 }
 
 type Repository struct {
@@ -21,6 +22,7 @@ type Repository struct {
 func NewRepository(dbPool *pgxpool.Pool) *Repository {
 	return &Repository{
 		Class: NewClassPostgres(dbPool),
+		Student: NewStudentPostgres(dbPool),
 	}
 }
 

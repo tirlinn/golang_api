@@ -1,7 +1,7 @@
 package model
 
 type Class struct {
-	Id int `json:"id" form:"class_name"`
+	Id int `json:"id" form:"id"`
 	ClassName string `json:"class_name" form:"class_name"`
 }
 

@@ -28,3 +28,29 @@ func (r *ClassPostgres) CreateClass(class model.Class) (int, error) {
 
 	return id, nil
 }
+
+func (r *ClassPostgres) GetAllClasses() ([]model.Class, error) {
+	var list []model.Class
+
+	query := fmt.Sprintf("SELECT * FROM %s", classTable)
+
+	rows, err := r.dbPool.Query(context.Background(), query)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var class model.Class
+
+		err = rows.Scan(&class.Id, &class.ClassName)
+		if err != nil {
+			return nil, err
+		}
+
+		list = append(list, class)
+	}
+
+	return list, err
+}

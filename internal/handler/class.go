@@ -27,5 +27,13 @@ func (h *Handler) CreateClass(c echo.Context) error {
 }
 
 func(h *Handler) GetAllClasses(c echo.Context) error {
-	return c.String(http.StatusOK, "Ok")
+	classes, err := h.services.GetAllClasses()
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"error": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, classes)
 }
